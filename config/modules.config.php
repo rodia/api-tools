@@ -27,4 +27,5 @@ return [
     'Laminas\\ApiTools\\Versioning',
     'Application',
     'addstock',
+    'EnterpriseLib',
 ];

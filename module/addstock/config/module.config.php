@@ -81,4 +81,45 @@ return [
             ],
         ],
     ],
+    'api-tools-content-validation' => [
+        'addstock\\V1\\Rest\\Enterprise\\Controller' => [
+            'input_filter' => 'addstock\\V1\\Rest\\Enterprise\\Validator',
+        ],
+    ],
+    'input_filter_specs' => [
+        'addstock\\V1\\Rest\\Enterprise\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'logo',
+            ],
+        ],
+    ],
+    'api-tools-mvc-auth' => [
+        'authorization' => [
+            'addstock\\V1\\Rest\\Enterprise\\Controller' => [
+                'collection' => [
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ],
+                'entity' => [
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => true,
+                ],
+            ],
+        ],
+    ],
 ];

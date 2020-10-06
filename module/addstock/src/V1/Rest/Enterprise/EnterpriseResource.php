@@ -1,11 +1,19 @@
 <?php
 namespace addstock\V1\Rest\Enterprise;
 
+use EnterpriseLib\MapperInterface;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
 
 class EnterpriseResource extends AbstractResourceListener
 {
+    protected $mapper;
+
+    public function __construct(MapperInterface $mapper)
+    {
+        $this->mapper = $mapper;
+    }
+
     /**
      * Create a resource
      *
@@ -14,7 +22,7 @@ class EnterpriseResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        return $this->mapper->create($data);
     }
 
     /**
@@ -25,7 +33,7 @@ class EnterpriseResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        return $this->mapper->delete($id);
     }
 
     /**
@@ -47,7 +55,7 @@ class EnterpriseResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return $this->mapper->fetch($id);
     }
 
     /**
@@ -58,7 +66,7 @@ class EnterpriseResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        return $this->mapper->fetchAll();
     }
 
     /**
@@ -70,7 +78,7 @@ class EnterpriseResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        return $this->mapper->update($id, $data);
     }
 
     /**
@@ -104,6 +112,6 @@ class EnterpriseResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        return $this->mapper->update($id, $data);
     }
 }
