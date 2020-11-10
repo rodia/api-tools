@@ -3,13 +3,52 @@
 /**
  * Local Configuration Override
  *
- * This configuration override file is for overriding environment-specific and
- * security-sensitive configuration information. Copy this file without the
- * .dist extension at the end and populate values as needed.
- *
- * @NOTE: This file is ignored from Git by default with the .gitignore included
- * in LaminasSkeletonApplication. This is a good practice, as it prevents sensitive
- * credentials from accidentally being committed into version control.
+ * To Heroku ecosystem.
  */
 
-return [];
+$db = parse_url(getenv("DATABASE_URL"));
+$dns = "pgsql:" . sprintf(
+    "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+    $db["host"],
+    $db["port"],
+    $db["user"],
+    $db["pass"],
+    ltrim($db["path"], "/"));
+
+return [
+    'api-tools-mvc-auth' => [
+        'authentication' => [
+            'adapters' => [
+                'oauth' => [
+                    'adapter' => \Laminas\ApiTools\MvcAuth\Authentication\OAuth2Adapter::class,
+                    'storage' => [
+                        'adapter' => \pdo::class,
+                        'dsn' => $dns,
+                        'route' => '/oauth',
+                        'username' => $db['user'],
+                        'password' => $db['pass'],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'db' => [
+        'adapters' => [
+            'PGAdapter' => [
+                'database' => ltrim($db["path"], "/"),
+                'driver' => 'PDO_Pgsql',
+                'hostname' => $db["host"],
+                'username' => $db["user"],
+                'password' => $db["pass"],
+                'port' => $db["port"],
+                'dsn' => $dsn,
+            ],
+        ],
+    ],
+    'api-tools-oauth2' => [
+        'allow_implicit' => true,
+    ],
+    'EnterpriseLib' => [
+        'array_mapper_path' => 'data/enterpriselib.php',
+    ],
+];
