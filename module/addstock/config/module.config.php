@@ -10,7 +10,7 @@ return [
             'addstock.rest.enterprise' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/enterprise[/:enterprise_id]',
+                    'route' => '/api/v1/enterprise[/:enterprise_id]',
                     'defaults' => [
                         'controller' => 'addstock\\V1\\Rest\\Enterprise\\Controller',
                     ],
