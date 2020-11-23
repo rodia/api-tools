@@ -2,18 +2,7 @@
 
 /**
  * Local Configuration Override
- *
- * To Heroku ecosystem.
  */
-
-$db = parse_url(getenv("DATABASE_URL"));
-$dns = "pgsql:" . sprintf(
-    "host=%s;port=%s;user=%s;password=%s;dbname=%s",
-    $db["host"],
-    $db["port"],
-    $db["user"],
-    $db["pass"],
-    ltrim($db["path"], "/"));
 
 return [
     'api-tools-mvc-auth' => [
@@ -23,10 +12,10 @@ return [
                     'adapter' => \Laminas\ApiTools\MvcAuth\Authentication\OAuth2Adapter::class,
                     'storage' => [
                         'adapter' => \pdo::class,
-                        'dsn' => $dns,
+                        'dsn' => 'url-to-connection',
                         'route' => '/oauth',
-                        'username' => $db['user'],
-                        'password' => $db['pass'],
+                        'username' => 'user-place',
+                        'password' => 'password-place',
                     ],
                 ],
             ],
@@ -35,13 +24,13 @@ return [
     'db' => [
         'adapters' => [
             'PGAdapter' => [
-                'database' => ltrim($db["path"], "/"),
+                'database' => 'database-place',
                 'driver' => 'PDO_Pgsql',
-                'hostname' => $db["host"],
-                'username' => $db["user"],
-                'password' => $db["pass"],
-                'port' => $db["port"],
-                'dsn' => $dsn,
+                'hostname' => 'localhost',
+                'username' => 'user.place',
+                'password' => 'password-place',
+                'port' => '5432',
+                'dsn' => 'url-to-connection',
             ],
         ],
     ],
